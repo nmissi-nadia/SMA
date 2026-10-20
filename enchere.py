@@ -40,6 +40,26 @@ def get_user_input(prompt):
         return "p"
 
 
+def get_auction_details():
+    item = ""
+    while not item:
+        item = input("[Vendeur] Nom de l'article à vendre : ").strip()
+        if not item:
+            print("[Vendeur] Le nom de l'article ne peut pas être vide.")
+
+    while True:
+        raw_price = input("[Vendeur] Prix de départ en DH (nombre entier positif) : ").strip()
+        try:
+            start_price = int(raw_price)
+        except ValueError:
+            print("[Vendeur] Saisissez un prix sous forme de nombre entier.")
+            continue
+        if start_price <= 0:
+            print("[Vendeur] Le prix de départ doit être supérieur à zéro.")
+            continue
+        return item, start_price
+
+
 # ---------------------------------------------------------------- VENDEUR
 class AuctionBehaviour(OneShotBehaviour):
     async def run(self):
@@ -251,7 +271,8 @@ if __name__ == "__main__":
 
     elif role == "vendeur":
         print("[Vendeur] Démarrage du Vendeur dans ce terminal...")
-        agent = SellerAgent(SELLER, PASSWORD, item="Tableau ancien", start_price=100)
+        item, start_price = get_auction_details()
+        agent = SellerAgent(SELLER, PASSWORD, item=item, start_price=start_price)
         asyncio.run(_run(agent))
 
     else:

@@ -73,6 +73,7 @@ Ouvrez **deux fenêtres de terminal** :
    ```bash
    python enchere.py vendeur
    ```
+   Le vendeur vous demande le nom de l'article puis son prix de départ en DH.
 
 2. **Terminal 2 — Lancer votre Acheteur (avec un budget de 300 DH) :**
    ```bash
@@ -84,8 +85,8 @@ Ouvrez **deux fenêtres de terminal** :
 > ```text
 > --------------------------------------------------
 > [ANNONCE] [acheteur1] NOUVELLE ANNONCE DU VENDEUR
->    Objet           : Tableau ancien
->    Prix actuel     : 100 DH
+>    Objet           : (article saisi par le vendeur)
+>    Prix actuel     : (prix de départ choisi par le vendeur)
 >    Leader actuel   : Aucun
 >    Votre budget    : 300 DH
 > --------------------------------------------------
