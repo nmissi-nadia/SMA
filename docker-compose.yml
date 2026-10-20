@@ -1,0 +1,11 @@
+services:
+  prosody:
+    image: prosody/prosody:latest
+    container_name: prosody
+    ports:
+      - "5222:5222"
+    volumes:
+      - ./prosody.cfg.lua:/etc/prosody/prosody.cfg.lua:ro
+      - prosody-data:/var/lib/prosody
+volumes:
+  prosody-data:
