@@ -22,11 +22,18 @@ La devise utilisée pour les transactions est le **Dirham (DH)**.
 
 ## 🏗️ Architecture & Fonctionnement
 
+Le code est structuré en modules clairs pour faciliter la compréhension et la maintenance :
+
+- ⚙️ **[`config.py`](config.py)** : Configuration réseau XMPP, identifiants, constantes (durée des tours, devise DH) et fonctions utilitaires communes (`make_msg`, `run_agent`).
+- 🏷️ **[`vendeur.py`](vendeur.py)** : Contient l'agent [`SellerAgent`](vendeur.py) et son comportement [`AuctionBehaviour`](vendeur.py) (initiation de l'enchère, envoi des `cfp`, collecte des offres, désignation du vainqueur).
+- 🙋 **[`acheteur.py`](acheteur.py)** : Contient l'agent [`BuyerAgent`](acheteur.py) et son comportement [`BidBehaviour`](acheteur.py) (mode interactif au clavier ou robot automatique avec budget plafond).
+- 🚀 **[`enchere.py`](enchere.py)** : Point d'entrée principal et orchestrateur (lance le vendeur, un acheteur ou la simulation complète Ray).
+
 - **Serveur XMPP (Prosody)** : Exécuté dans un conteneur Docker, il gère l'authentification et le routage des messages FIPA-ACL entre les agents sur le port `5222`.
 - **Agent Vendeur (`SellerAgent`)** :
   - Met un article en vente à un prix initial (ex: `Tableau ancien` à `100 DH`).
   - Envoie un appel à propositions (`cfp`) à tous les acheteurs.
-  - Collecte les offres pendant un tour chronométré (15 secondes).
+  - Collecte les offres pendant un tour chronométré (30 secondes par défaut, configurable dans `config.py`).
   - Détermine la meilleure offre, actualise le prix et recommence jusqu'à épuisement des enchères.
   - Proclame le gagnant avec un message d'information (`inform`).
 - **Agents Acheteurs (`BuyerAgent`)** :
